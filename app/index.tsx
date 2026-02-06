@@ -5,10 +5,20 @@ import { SafeAreaView } from "react-native-safe-area-context";
 //Categories
 const CATEGORIES = ["All", "Music", "Podcasts", "Audiobooks"];
 
+// Playlists
+const PLAYLISTS = [
+  { id: 1, title: "Top Hits", category: "Music", image: "https://picsum.photos/id/101/200" },
+  { id: 2, title: "Daily Mix", category: "Music", image: "https://picsum.photos/id/180/200" },
+  { id: 3, title: "Tech Talks", category: "Podcasts", image: "https://picsum.photos/id/103/200" },
+  { id: 4, title: "True Crime", category: "Podcasts", image: "https://picsum.photos/id/250/200" },
+];
+
+
 //Home Screen is basically everything up to styling at the bottom
 export default function Index() {
   //Button selection
   const [active, setActive] = useState<string>("All");
+  const [activePlaylist, setActivePlaylist] = useState<number | null>(null);
 
   //Using safe area so no overlap
   return (
@@ -51,6 +61,34 @@ export default function Index() {
           </View>
         </View>
 
+          {/*Playlists ScrollView*/}
+        <ScrollView 
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        style={{ marginTop: 20 }} >
+
+          {PLAYLISTS.map((pl) => {
+            const isActive = pl.id === activePlaylist;
+            return (
+              <Pressable
+                key={pl.id}
+                onPress={() => setActivePlaylist(pl.id)}
+                style={styles.playlistCard}
+              >
+                <Image source={{ uri: pl.image }} style={styles.playlistImage} />
+                <Text
+                  style={[
+                    styles.playlistText,
+                    isActive && { color: "#1DB954", fontWeight: "bold" },
+                  ]}
+                >
+                  {pl.title}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </ScrollView>
+           
         <Pressable
           // Alert Button required for the project idk we will need to make this fit into the ui
           style={styles.alertButton}
@@ -131,5 +169,21 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
    marginLeft: 100,
    marginRight: 100,
+  },
+  playlistCard: {
+    marginRight: 16,
+    width: 120,
+    alignItems: "center",
+ },
+  playlistImage: {
+    width: 120,
+    height: 120,
+    borderRadius: 10,
+  },
+  playlistText: {
+    color: "#fff",
+    marginTop: 6,
+    fontWeight: "600",
+    textAlign: "center",
   },
 });
