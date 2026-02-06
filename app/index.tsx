@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
+import { Alert, Pressable, StyleSheet, Text, View , Image,ScrollView} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 //Categories
@@ -18,6 +18,8 @@ export default function Index() {
           <View style={styles.avatar}>
             <Text style={styles.avatarText}>R</Text>
           </View>
+
+          <Text style={styles.greeting}>Good Morning</Text>
 
           <View style={styles.categoryRow}>
             {CATEGORIES.map((label) => {
@@ -70,6 +72,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 12,
+    justifyContent: "space-between",
   },
 
   avatar: {
@@ -85,7 +88,7 @@ const styles = StyleSheet.create({
   categoryRow: {
     flex: 1,
     flexDirection: "row",
-    gap: 10,
+    gap: 20,
   },
 
   categoryButton: {
@@ -121,5 +124,12 @@ const styles = StyleSheet.create({
     color: "#000",
     fontWeight: "800",
     fontSize: 16,
+  },
+  greeting: {
+    color: "#fff",
+    fontSize: 24,
+    fontWeight: "bold",
+   marginLeft: 100,
+   marginRight: 100,
   },
 });
