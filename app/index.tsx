@@ -11,6 +11,14 @@ const PLAYLISTS = [
   { id: 2, title: "Daily Mix", category: "Music", image: "https://picsum.photos/id/180/200" },
   { id: 3, title: "Tech Talks", category: "Podcasts", image: "https://picsum.photos/id/103/200" },
   { id: 4, title: "True Crime", category: "Podcasts", image: "https://picsum.photos/id/250/200" },
+  { id: 5, title: "Chill Vibes", category: "Music", image: "https://picsum.photos/id/39/200" },
+  { id: 6, title: "Workout", category: "Music", image: "https://picsum.photos/id/106/200" },
+  { id: 7, title: "Comedy", category: "Podcasts", image: "https://picsum.photos/id/107/200" },
+  { id: 8, title: "History", category: "Audiobooks", image: "https://picsum.photos/id/108/200" },
+  { id: 9, title: "Science Fiction", category: "Audiobooks", image: "https://picsum.photos/id/109/200" },
+  { id: 10, title: "Classics", category: "Audiobooks", image: "https://picsum.photos/id/110/200" },
+  { id: 11, title: "Jazz Essentials", category: "Music", image: "https://picsum.photos/id/111/200" },
+  { id: 12, title: "Meditation", category: "Audiobooks", image: "https://picsum.photos/id/112/200" },
 ];
 
 
@@ -22,15 +30,25 @@ export default function Index() {
 
   //Using safe area so no overlap
   return (
+    //<SafeAreaView style={styles.safe}>
     <SafeAreaView style={styles.safe}>
-      <View style={styles.screen}>
+  <ScrollView>
+
+      {/* <View style={styles.screen}>
         <View style={styles.headerRow}>
           <View style={styles.avatar}>
             <Text style={styles.avatarText}>R</Text>
           </View>
 
-          <Text style={styles.greeting}>Good Morning</Text>
+          <Text style={styles.greeting}>Good Morning</Text> */}
 
+<View style={styles.header}>
+  <View style={styles.topRow}>
+    <View style={styles.avatar}>
+      <Text style={styles.avatarText}>R</Text>
+    </View>
+    <Text style={styles.greeting}>Good Morning</Text>
+  </View>
           <View style={styles.categoryRow}>
             {CATEGORIES.map((label) => {
               const isActive = label === active;
@@ -61,6 +79,8 @@ export default function Index() {
           </View>
         </View>
 
+        <Text style={styles.sectionTitle}>Popular Playlists</Text>
+
           {/*Playlists ScrollView*/}
         <ScrollView 
         horizontal={true}
@@ -88,6 +108,38 @@ export default function Index() {
             );
           })}
         </ScrollView>
+
+        <Text style={styles.sectionTitle}>Recently Played</Text>
+
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          style={{ marginTop: 10 }}
+        >
+          {PLAYLISTS.slice(0, 6).map((pl) => (
+            <View key={"recent-" + pl.id} style={styles.playlistCard}>
+              <Image source={{ uri: pl.image }} style={styles.playlistImage} />
+              <Text style={styles.playlistText}>{pl.title}</Text>
+            </View>
+          ))}
+        </ScrollView>
+
+        <Text style={styles.sectionTitle}>Recommended For You</Text>
+
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          style={{ marginTop: 10 }}
+        >
+          {PLAYLISTS.slice(6, 12).map((pl) => (
+            <View key={"rec-" + pl.id} style={styles.playlistCard}>
+              <Image source={{ uri: pl.image }} style={styles.playlistImage} />
+              <Text style={styles.playlistText}>{pl.title}</Text>
+            </View>
+          ))}
+        </ScrollView>
+
+
            
         <Pressable
           // Alert Button required for the project idk we will need to make this fit into the ui
@@ -96,7 +148,8 @@ export default function Index() {
         >
           <Text style={styles.alertButtonText}>Alert</Text>
         </Pressable>
-      </View>
+      {/* </View> */}
+        </ScrollView>
     </SafeAreaView>
   );
 }
@@ -106,11 +159,21 @@ const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: "#000" },
   screen: { paddingHorizontal: 16, paddingTop: 8 },
 
-  headerRow: {
+  // headerRow: {
+  //   flexDirection: "row",
+  //   alignItems: "center",
+  //   gap: 12,
+  //   justifyContent: "space-between",
+  // },
+  
+  header: {
+    marginTop: 10,
+  },
+
+  topRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 12,
-    justifyContent: "space-between",
+    marginBottom: 12,
   },
 
   avatar: {
@@ -121,6 +184,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+
   avatarText: { color: "#fff", fontWeight: "800" },
 
   categoryRow: {
@@ -186,4 +250,12 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     textAlign: "center",
   },
+  sectionTitle: {
+  color: "#fff",
+  fontSize: 18,
+  fontWeight: "bold",
+  marginTop: 20,
+  marginBottom: 10,
+},
+
 });
