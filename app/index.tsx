@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Alert,
   Image,
@@ -13,22 +13,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 //Categories
 const topAhNav = ["All", "Music", "Podcasts", "Audiobooks"];
 const bottomAhNav = ["Home", "Search", "Your Library", "Create"];
-
-// Emjois for bottom bar
-const getNavEmoji = (label: string) => {
-  switch (label) {
-    case "Home":
-      return "🏠";
-    case "Search":
-      return "🔍";
-    case "Your Library":
-      return "📚";
-    case "Create":
-      return "➕";
-    default:
-      return "•";
-  }
-};
 
 type Playlist = {
   id: number;
@@ -157,6 +141,21 @@ function PlaylistRow(props: {
   );
 }
 
+const getIcon = (label: string) => {
+  switch (label) {
+    case "Home":
+      return require("../assets/images/home.png");
+    case "Search":
+      return require("../assets/images/search.png");
+    case "Your Library":
+      return require("../assets/images/library.png");
+    case "Create":
+      return require("../assets/images/add.png");
+    default:
+      return require("../assets/images/home.png");
+  }
+};
+
 //Home Screen is basically everything up to styling at the bottom
 export default function Index() {
   //Button selection
@@ -238,7 +237,6 @@ export default function Index() {
         {/* Fixed bottom area */}
         <View style={styles.bottomArea}>
           <Pressable
-            // Alert Button required for the project idk we will need to make this fit into the ui
             style={styles.alertButton}
             onPress={() => Alert.alert("Alert Button pressed")}
           >
@@ -261,10 +259,15 @@ export default function Index() {
                       isActiveTab && styles.navIconWrapActive,
                     ]}
                   >
-                    {/* Spotify icons are not public so this is the best I can do if you find better emojis feel free to add them. */}
-                    <Text style={styles.navIconEmoji}>
-                      {getNavEmoji(label)}
-                    </Text>
+                    <Image
+                      source={getIcon(label)}
+                      style={[
+                        styles.navIcon,
+                        isActiveTab
+                          ? styles.navIconActive
+                          : styles.navIconInactive,
+                      ]}
+                    />
                   </View>
 
                   <Text style={getTabTextStyle(isActiveTab)}>{label}</Text>
@@ -418,12 +421,25 @@ const styles = StyleSheet.create({
 
   navIconWrapActive: { backgroundColor: "#1f1f1f" },
 
-  navIconEmoji: { fontSize: 18 },
-
   navText: {
     fontSize: 12,
     fontWeight: "700",
   },
+
   navTextActive: { color: "#fff" },
+
   navTextIdle: { color: "#a7a7a7" },
+
+  navIcon: {
+    width: 20,
+    height: 20,
+  },
+
+  navIconActive: {
+    tintColor: "white",
+  },
+
+  navIconInactive: {
+    tintColor: "#a7a7a7",
+  },
 });
